@@ -42,12 +42,27 @@ bool GlfwOpenGL3Backend::Init() {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  // Required on Mac
 
+  // 隐藏背景
+//   glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);  // 不显示边框
+//   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);  // 不可调整大小
+//   glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);  // 启用透明背景
+
+//   glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // 设置 offscreen context 的标志位
+
+  // 获取屏幕信息
+//   GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+//   const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+//   auto screen_width = mode->width; 
+//   auto screen_heigh = mode->height;
+
   window_ = glfwCreateWindow(options_.window_width, options_.window_height,
                              options_.window_title.c_str(), nullptr, nullptr);
   if (window_ == nullptr) {
     std::cerr << "Failed to create GLFW window" << std::endl;
     return false;
   }
+
+  //   glfwHideWindow(window_);
 
   glfwMakeContextCurrent(window_);
   glfwSwapInterval(1);  // Enable vsync
@@ -62,10 +77,17 @@ bool GlfwOpenGL3Backend::Init() {
   ImGuiIO& imgui_io = ImGui::GetIO();
   if (imgui_io.Fonts->AddFontFromFileTTF(
           options_.font_path.c_str(),
-          options_.font_size * options_.gui_scale) == nullptr) {
+          options_.font_size * options_.gui_scale, nullptr, imgui_io.Fonts->GetGlyphRangesChineseFull()) == nullptr) {
     std::cerr << "Error loading font " << options_.font_path << std::endl;
     return false;
   }
+
+    // imgui_io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    // // imgui_io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;        // Enable Gamepad Controls
+    // imgui_io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // !!! 启用 docking 功能的支持
+    // imgui_io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // !!! 启用 viewport 功能的支持
+    // imgui_io.ConfigViewportsNoAutoMerge = true;                       // 参考评论，建议加上这行
+    // // // imgui_io.ConfigViewportsNoTaskBarIcon = true;
 
   ImGui::GetStyle().ScaleAllSizes(options_.gui_scale);
 

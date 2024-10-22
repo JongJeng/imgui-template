@@ -11,9 +11,10 @@ constexpr int kWindowWidth = 1280;
 constexpr int kWindowHeight = 720;
 const char* const kWindowTitle = "Simple (ImGui + ImPlot) template";
 const std::array<int, 4> kBgColor{114, 140, 165, 255};
-const char* const kFontPath = "ProggyClean.ttf";
+// const char* const kFontPath = "ProggyClean.ttf";
+const char* const kFontPath = "MSYH.TTC";
+const float kGuiScale = 2.0f;
 const float kFontSize = 13.0f;
-const float kGuiScale = 1.0f;
 
 }  // namespace defaults
 

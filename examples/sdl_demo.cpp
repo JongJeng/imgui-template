@@ -1,7 +1,7 @@
 #include <imgui.h>
 #include <implot.h>
 
-#include "sdl_renderer_app.hpp"
+#include "sdl3_renderer3_app.hpp"
 
 int main(int /*unused*/, char** /*unused*/) {
   // NOLINTNEXTLINE(readability-magic-numbers)

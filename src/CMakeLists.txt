@@ -1,26 +1,33 @@
-
 # SDL library
+# sdl3 + sdlrenderer3(OpenGL/Direct3D/Metal/Vulkan)
+ 
+find_package(SDL3 QUIET)
 
-find_package(SDL2 QUIET)
-
-if (SDL2_FOUND)
+if (SDL3_FOUND)
   add_library(imguiplot-sdl-app STATIC
-    sdl_renderer_app.cpp
-    ../external/imgui/backends/imgui_impl_sdl.cpp
-    ../external/imgui/backends/imgui_impl_sdlrenderer.cpp
+    sdl3_renderer3_app.cpp
+    ../external/imgui/backends/imgui_impl_sdl3.cpp
+    ../external/imgui/backends/imgui_impl_sdlrenderer3.cpp
   )
 
   target_include_directories(imguiplot-sdl-app PUBLIC
     .
+    ${SDL3_INCLUDE_DIRS}
     ../external/imgui/backends
   )
-
   target_link_libraries(imguiplot-sdl-app PUBLIC
-    SDL2::SDL2 SDL2::SDL2main imgui implot
+    ${SDL3_LIBRARIES}
+    imgui
+    implot
   )
 endif()
 
+message(STATUS "SDL3_FOUND: ${SDL3_FOUND}")
+
+#################################################################
+
 # GLFW library
+# glfw + opengl3
 
 find_package(glfw3 QUIET)
 find_package(OpenGL QUIET)
@@ -38,6 +45,10 @@ if (glfw3_FOUND AND OpenGL_FOUND)
   )
 
   target_link_libraries(imguiplot-glfw-app PUBLIC
-    glfw OpenGL::GL imgui implot
+    glfw OpenGL::GL
+    imgui implot dl
   )
 endif()
+
+message(STATUS "glfw3_FOUND: ${glfw3_FOUND}")
+message(STATUS "OpenGL_FOUND: ${OpenGL_FOUND}")

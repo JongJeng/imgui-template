@@ -1,6 +1,7 @@
 
 set(FONT_FILES
-  "${IMGUI_FONT_DIR}/ProggyClean.ttf"
+  "${FONTS_DIR}/MSYH.TTC"
+  "${FONTS_DIR}/SourceCodePro-Regular.ttf"
 )
 
 if (TARGET imguiplot-sdl-app)
